@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>lunch N learn</title>
+    <link href="Content/lnl.css" rel="stylesheet" />
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="lnl-main panel-primary">
+        <h3 id="timeplace" class="alert-danger"> </h3>
+        <h3 id="topic" class="lnl-title">
+           
+        </h3>
+        
+       
+       
+        <div class="lnl-panel">
+            <table class="table table-striped mytable">
+                <tbody id="namelist"></tbody>
+            </table>
+        </div>
+        </div>
+        <input type="text" id="userName" title="user name" />
+        <input type="button" value="join us now!" id="submit" title="join us" class="btn-primary"/>
+   
+    <script type="text/javascript" src="Scripts/jquery-2.1.0.min.js"> </script>
+    <script type="text/javascript">
+        $('document').ready(function () {
+            loadUsers();
+            loadSessionInfo();
+            wireEvent();
+        });
+
+        //load session time and place
+        function loadSessionInfo() {
+            $.getJSON("api/admin", function (data) {
+                var info = jQuery.parseJSON(data);
+                $('#timeplace').text(info.timeplace);
+                $('#topic').text(info.topic);
+            });
+        }
+        //load all users 
+        function loadUsers() {
+            var container = $('#namelist');
+            //container.remove($('tr'));
+            $.getJSON("api/members", function (data) {
+               
+                for (var index in data) {
+                    container.append('<tr><td>' + index
+                                     + '</td><td>' + data[index] + '</td></tr>');
+                }
+            });
+
+        }
+        //post user name to backend
+        function wireEvent(){
+            $('#submit').click(function () {
+              
+                var member = $('#userName').val().trim();
+                if (member.length < 1 || member.length > 20)
+                {
+                    alert('Your name needs to be less than 20 characters');
+                    return;
+                }
+                $.post('api/members', { name: member }, function (data) {
+                    emptyUsers();
+                    loadUsers();
+                }, "json").fail(function () {
+
+                });             
+            });
+        }
+
+        function emptyUsers() {
+            $('tr').remove();
+        }
+
+    </script>
+</body>
+</html>

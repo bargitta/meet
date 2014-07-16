@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>admin page</title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/lnl.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+        <h3>Admin page</h3>
+        <a class="backlink" href="lunchlearn.html">View registry Page</a>
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Clear existing members</h4>
+                <input id="clear-btn" type="button" value="clear all members" class="btn-block"/>
+            </div>
+            <div class="col-md-7">
+                <h4>Submit next lunch and learn session</h4>          
+                <div id="sessionInfo">
+                    Time and place : <input id="timeplace" type="text" name="timeplace" />
+                    Topic: <input id="topic" type="text" name="topic" />
+                    <input id="submit" type="submit" value="Submit">
+                </div>          
+            </div>
+        </div>
+        <div class="row rotation">
+            <header>
+                <h3 class="text-center">Rotation table</h3>
+            </header>
+            <table class="col-md-10 table-striped table-bordered text-center">
+                <tr>
+                    <td>Time</td> 
+                    <td>Coordinators</td>
+                </tr>   
+                <tr>
+                    <td>July 25 -- Aug 5 </td>  
+                    <td>Wang Qian & Cai Yunfei</td>
+                </tr>    
+                <tr>
+                    <td>Aug 6 -- Aug 21</td>
+                    <td>Sun Bo & Song Xiaoli</td>
+                </tr> 
+                <tr>
+                    <td>Aug 22 -- Sep 4</td>
+                    <td>Zhou Shiwei & Jia Xingwei</td>
+                </tr>
+                <tr>
+                    <td>Sep 5 -- Sep 18</td>
+                    <td>Hao Ning & Zhang Jiao</td>
+                </tr>   
+                <tr>
+                    <td>Sep 19 -- Oct 1</td>
+                    <td>He Yan & Yao Jia</td>
+                </tr> 
+            </table>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="Scripts/jquery-2.1.0.min.js"> </script>
+    <script type="text/javascript">
+        $('document').ready(function () {
+           wireEvent();
+        });
+        function wireEvent() {
+            $('#submit').click(function () {
+                var sessionData = {
+                    timeplace: $('#timeplace').val(),
+                    topic: $('#topic').val()
+                };
+                $.ajax({
+                    url: 'api/admin',
+                    type: 'POST',
+                    data: sessionData,
+                    success: function (result) {
+                        alert('session info updated successfully!');
+                    }
+                });
+            });
+            $('#clear-btn').click(function () {
+
+                $.ajax({
+                    url: 'api/members/clear',
+                    type: 'POST',
+                    success: function (result) {
+                        alert('members are successfully cleared');
+                    }
+                });
+
+            });
+        }
+    </script>
+</body>
+</html>

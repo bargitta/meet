@@ -1,0 +1,38 @@
+﻿body {
+    text-align: center;
+    margin-right: auto; 
+    margin-left: auto;                        
+    min-height: 420px;
+    margin-top: 25px;
+  
+   
+}
+
+.mytable{
+     padding-left:600px;
+     padding-right:600px;
+     border: 1px solid;
+     border-color: grey;
+}
+.lnl-panel{
+    padding-left:600px;
+    padding-right:600px;
+}
+.lnl-main{
+    padding-top:20px;
+
+}
+
+.lnl-title {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 20px;
+}
+.rotation {
+    margin-top: 100px;
+    font-size: 1.2em;
+}
+
+.backlink {
+    float: right
+}
